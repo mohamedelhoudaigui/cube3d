@@ -6,16 +6,11 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:55:30 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/03/20 04:57:56 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/21 00:59:49 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-void    arg_err(void)
-{
-	write(2, "invalid arguments\n", 18);
-}
 
 bool    valid_file(int ac, char *file)
 {
@@ -24,53 +19,65 @@ bool    valid_file(int ac, char *file)
 	if (ac != 2)
 		return (false);
 	if (ft_strlen(file) < 4)
-		return (false);
+	{
+		print_err("Error\ninvalid arguments\n");
+		exit (1);
+	}
 	len = ft_strlen(file) - 4;
 	if (ft_strncmp(file + len, ".cub", 4) != 0)
-		return (false);
+	{
+		print_err("Error\ninvalid arguments\n");
+		exit (1);
+	}
 	if (open(file, O_RDONLY, 644) == -1)
-		return (false);
+	{
+		print_err("Error\ninvalid arguments\n");
+		exit (1);
+	}
 	return (true);
 }
 
-t_init_map	*assign_line(t_list *data)
+void	*assign_line(t_list *data, t_init_map *map)
 {
 	t_list		*map_list;
-	t_init_map	*map;
 	t_list		*part;
+	char		*tmp;
+	int			tm;
 
-	if (!data)
+	if (!data || !map)
 		return (NULL);
-	map = gb_malloc(sizeof(t_init_map), 0);
-	map->map = NULL;
-	while (data && data->content)
+	tm = 0;
+	while (data && data->content && tm < 6)
 	{
-		if (ft_strncmp(data->content, "SO ", 3) == 0)
-			map->SO_tex = ft_strdup(data->content);
-		else if (ft_strncmp(data->content, "NO ", 3) == 0)
-			map->NO_tex = ft_strdup(data->content);
-		else if (ft_strncmp(data->content, "WE ", 3) == 0)
-			map->WE_tex = ft_strdup(data->content);
-		else if (ft_strncmp(data->content, "EA ", 3) == 0)
-			map->EA_tex = ft_strdup(data->content);
-		else if (ft_strncmp(data->content, "F ", 2) == 0)
-			map->f_color = ft_strdup(data->content);
-		else if (ft_strncmp(data->content, "C ", 2) == 0)
-			map->c_color = ft_strdup(data->content);
-		else if (ft_strncmp(data->content, "1", 1) == 0
-				|| ft_strncmp(data->content, "0", 1) == 0)
+		tmp = data->content;
+		if (analyse_line(tmp) == true)
+		{
+			tmp = ft_strtrim(data->content, " ");
+			if (ft_strncmp(tmp, "SO ", 3) == 0)
+				map->SO_tex = tmp;
+			else if (ft_strncmp(tmp, "NO ", 3) == 0)
+				map->NO_tex = tmp;
+			else if (ft_strncmp(tmp, "WE ", 3) == 0)
+				map->WE_tex = tmp;
+			else if (ft_strncmp(tmp, "EA ", 3) == 0)
+				map->EA_tex = tmp;
+			else if (ft_strncmp(tmp, "F ", 2) == 0)
+				map->f_color = tmp;
+			else if (ft_strncmp(tmp, "C ", 2) == 0)
+				map->c_color = tmp;
+			else
 			{
-				part = ft_lstnew(data->content);
-				ft_lstadd_back(&map->map, part);
+				free(tmp);
+				return (NULL);
 			}
-		else
-			return (NULL);
+			tm++;
+		}	
 		data = data->next;
 	}
 	return (map);
 }
 
-t_list	*parse_map(char *file)
+t_list	*fill_map(char *file)
 {
 	int		fd;
 	char	*line;
@@ -82,36 +89,63 @@ t_list	*parse_map(char *file)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		part = ft_lstnew(line);
-		ft_lstadd_back(&data, part);
+		if (line[0] != '\n')
+		{
+			part = ft_lstnew(line);
+			ft_lstadd_back(&data, part);
+		}
+		else
+			free(line);
 		line = get_next_line(fd);
 	}
 	return (data);
 }
 
+t_list	*isolate_map(t_list *head)
+{
+	int		i;
+	char	*tmp;
+	t_list	*part;
+	t_list	*map;
+
+	map = NULL;
+	while (head && head->content)
+	{
+		i = 0;
+		tmp = head->content;
+		while (tmp[i] && tmp[i] == ' ')
+			i++;
+		if (tmp[i] && (tmp[i] == '0' || tmp[i] == '1'))
+		{
+			tmp = replace(&tmp, "\n");
+			part = ft_lstnew(tmp);
+			ft_lstadd_back(&map, part);
+		}
+		head = head->next;
+	}
+	return (map);
+}	
+
+void	f()
+{
+	system("leaks cub3D");
+}
+
 int main(int ac, char **av)
 {
+	atexit(f);
 	t_list		*head;
-	t_init_map	*init_data;
 	t_list		*map;
+	t_init_map	*init_data;
+	t_tex_fd	*refined_map;
 
-	if (valid_file(ac, av[1]) == false)
-	{
-		arg_err();
-		return (1);
-	}
-	head = parse_map(av[1]);
-	if (!head)
-	{
-		gb_malloc(0, 1);
-		return (1);
-	}
-	init_data = assign_line(head);
-	if (!init_data)
-	{
-		gb_malloc(0, 1);
-		return (1);
-	}
-	
-	return (0);
+	valid_file(ac, av[1]);
+	head = fill_map(av[1]);
+	init_data = ft_calloc(sizeof(t_init_map), 1);
+	validate_tex(head, init_data);
+	map = isolate_map(head);
+	refined_map = open_fd(map, init_data);
+	// print_struct(refined_map);
+	check_borders(refined_map->map);
+	exit (0);
 }

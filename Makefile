@@ -1,4 +1,4 @@
-SRCS = garb_col.c parse.c
+SRCS = parse.c utils.c map_check.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -10,7 +10,7 @@ RM = rm -f
 
 NAME = cub3D
 
-HEADERS = cube.h garbage.h
+HEADERS = cube.h
 
 LIB = make -C ./libft
 
