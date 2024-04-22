@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 00:56:07 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/21 01:02:02 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 01:28:33 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	validate_tex(t_list *head, t_init_map *init_data)
 {
 	if (assign_line(head, init_data) == NULL)
 	{
-		print_err("Error\ntexture parsing error\n");
-		free_data(init_data, NULL);
+		print_err("Error\ntexture parsing error 1\n");
+		// free_data(NULL, head);
 		exit(1);
 	}
 	if (check_tex(init_data) == false)
 	{
-		print_err("Error\ntexture parsing error\n");
-		free_data(init_data, head);
+		print_err("Error\ntexture parsing error 2\n");
+		// free_data(NULL, head);
 		exit(1);
 	}
 }
@@ -100,6 +100,126 @@ void	check_borders(t_list *map)
 				print_err("Error\ninvalid map\n");
 				exit(1);
 			}
+		}
+		map = map->next;
+	}
+}
+
+bool	check_char(char *tmp)
+{
+	int	i;
+
+	i = 0;
+	while (tmp[i])
+	{
+		if (tmp[i] != ' '
+			&& tmp[i] != '0'
+			&& tmp[i] != '1'
+			&& tmp[i] != 'N'
+			&& tmp[i] != 'S'
+			&& tmp[i] != 'W'
+			&& tmp[i] != 'E')
+		{	
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+int	check_player(t_list *map)
+{
+	int		player;
+	char	*tmp;
+	int		i;
+
+	player = -1;
+	i = 0;
+	while (map && map->content)
+	{
+		i = 0;
+		tmp = map->content;
+		while (tmp[i])
+		{
+			if (tmp[i] == 'S'
+				|| tmp[i] == 'N'
+				|| tmp[i] == 'W'
+				|| tmp[i] == 'E')
+			{
+				player = -player;
+			}
+			i++;
+		}
+		map = map->next;
+	}
+	return (player);
+}
+
+
+bool	check_spaces_inside(t_list *map)
+{
+	char	**map_char;
+	int		i;
+	int		j;
+
+	i = 0;
+	map_char = malloc(sizeof(char *) * ft_lstsize(map) + 1);
+	while (map && map->content)
+	{
+		map_char[i] = map->content;
+		i++;
+		map = map->next;
+	}
+	map_char[i] = NULL;
+	i = 0;
+	while (map_char[i])
+	{
+		j = 0;
+		while (map_char[i][j])
+		{
+			if (map_char[i][j] == ' ')
+			{
+				if ((j != 0 && map_char[i][j - 1] != '1' && map_char[i][j - 1] != ' ')
+					|| (j != ft_strlen(map_char[i]) - 1 && map_char[i][j + 1] != '1' && map_char[i][j + 1] != ' ')
+					|| (i != 0 && map_char[i - 1][j] != '1' && map_char[i - 1][j] != ' ')
+					|| (i != ft_lstsize(map) - 1 && map_char[i + 1][j] != '1' && map_char[i + 1][j] != ' '))
+				{
+					free(map_char);	
+					return (false);
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+	free(map_char);
+	return (true);
+}
+
+void	check_map_elements(t_list *map)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	if (check_player(map) == -1)
+	{
+		print_err("Error\nno or too many players in map\n");
+		exit(1);
+	}
+	if (check_spaces_inside(map) == false)
+	{
+		print_err("Error\nspaces error\n");
+		exit(1);
+	}
+	while (map && map->content)
+	{
+		i = 0;
+		tmp = map->content;
+		if (check_char(tmp) == false)
+		{
+			print_err("Error\nunknown charater in map\n");
+			exit(1);
 		}
 		map = map->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/21 01:00:35 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 01:27:37 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_init_map
 void		print_struct(t_tex_fd *tex);
 bool		valid_file(int ac, char *file);
 t_list		*fill_map(char *file);
-void		*assign_line(t_list *data, t_init_map *map);
+t_init_map	*assign_line(t_list *data, t_init_map *map);
 bool		analyse_line(char *tmp);
 void		print_err(char *err_msg);
 bool		check_tex(t_init_map *map);
@@ -57,5 +57,8 @@ int			*convert_int(char *numb);
 bool		help_check(char *part, int mode);
 void		check_borders(t_list *map);
 t_tex_fd	*open_fd(t_list *map, t_init_map *map_tex);
+void		check_map_elements(t_list *map);
+int			check_player(t_list *map);
+bool		check_spaces_inside(t_list *map);
 
 #endif

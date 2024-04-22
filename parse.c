@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:55:30 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/21 00:59:49 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 01:36:29 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@ bool    valid_file(int ac, char *file)
 	return (true);
 }
 
-void	*assign_line(t_list *data, t_init_map *map)
+
+
+t_init_map	*assign_line(t_list *data, t_init_map *map)
 {
 	t_list		*map_list;
 	t_list		*part;
 	char		*tmp;
-	int			tm;
 
 	if (!data || !map)
 		return (NULL);
-	tm = 0;
-	while (data && data->content && tm < 6)
+	while (data && data->content)
 	{
 		tmp = data->content;
+		tmp = ft_strtrim(data->content, " ");
 		if (analyse_line(tmp) == true)
 		{
-			tmp = ft_strtrim(data->content, " ");
 			if (ft_strncmp(tmp, "SO ", 3) == 0)
 				map->SO_tex = tmp;
 			else if (ft_strncmp(tmp, "NO ", 3) == 0)
@@ -65,13 +65,7 @@ void	*assign_line(t_list *data, t_init_map *map)
 				map->f_color = tmp;
 			else if (ft_strncmp(tmp, "C ", 2) == 0)
 				map->c_color = tmp;
-			else
-			{
-				free(tmp);
-				return (NULL);
-			}
-			tm++;
-		}	
+		}
 		data = data->next;
 	}
 	return (map);
@@ -89,13 +83,8 @@ t_list	*fill_map(char *file)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		if (line[0] != '\n')
-		{
-			part = ft_lstnew(line);
-			ft_lstadd_back(&data, part);
-		}
-		else
-			free(line);
+		part = ft_lstnew(line);
+		ft_lstadd_back(&data, part);
 		line = get_next_line(fd);
 	}
 	return (data);
@@ -107,16 +96,24 @@ t_list	*isolate_map(t_list *head)
 	char	*tmp;
 	t_list	*part;
 	t_list	*map;
+	bool	key;
 
 	map = NULL;
+	key = false;
 	while (head && head->content)
 	{
 		i = 0;
 		tmp = head->content;
 		while (tmp[i] && tmp[i] == ' ')
 			i++;
+		if (key == true && tmp[i] == '\n' && tmp[i + 1] == '\0')
+		{
+			print_err("Error\nnew line in map\n");
+			exit(1);
+		}
 		if (tmp[i] && (tmp[i] == '0' || tmp[i] == '1'))
 		{
+			key = true;
 			tmp = replace(&tmp, "\n");
 			part = ft_lstnew(tmp);
 			ft_lstadd_back(&map, part);
@@ -133,7 +130,7 @@ void	f()
 
 int main(int ac, char **av)
 {
-	atexit(f);
+	// atexit(f);
 	t_list		*head;
 	t_list		*map;
 	t_init_map	*init_data;
@@ -145,7 +142,8 @@ int main(int ac, char **av)
 	validate_tex(head, init_data);
 	map = isolate_map(head);
 	refined_map = open_fd(map, init_data);
-	// print_struct(refined_map);
+	print_struct(refined_map);
 	check_borders(refined_map->map);
+	check_map_elements(refined_map->map);
 	exit (0);
 }

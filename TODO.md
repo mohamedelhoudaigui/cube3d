@@ -1,1 +1,1 @@
-check valid characters in the map
+check leaks to finish parsing
