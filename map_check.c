@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 00:56:07 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 01:28:33 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:07:39 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,41 @@ void	validate_tex(t_list *head, t_init_map *init_data)
 	if (assign_line(head, init_data) == NULL)
 	{
 		print_err("Error\ntexture parsing error 1\n");
-		// free_data(NULL, head);
+		free_data(init_data, head);
 		exit(1);
 	}
 	if (check_tex(init_data) == false)
 	{
 		print_err("Error\ntexture parsing error 2\n");
-		// free_data(NULL, head);
+		free_data(init_data, head);
 		exit(1);
 	}
 }
 
-t_tex_fd	*open_fd(t_list *map, t_init_map *map_tex)
+void	check_open(t_tex_fd *tex)
+{
+	// if (tex->EA_fd == -1 || tex->NO_fd == -1 || tex->SO_fd == -1 || tex->WE_fd == -1)
+	// {
+	// 	print_err("Error\nopening textures error\n");
+	// 	// exit(0);
+	// }
+}
+
+t_tex_fd	*open_fd(t_init_map *map_tex)
 {
 	t_tex_fd	*refined_map;
 
 	refined_map = malloc(sizeof(t_tex_fd));
 	if (!refined_map)
+	{
+		print_err("Error\nmalloc error\n");
 		exit(1);
+	}
 	refined_map->EA_fd = open(map_tex->EA_tex, O_RDONLY, 644);
 	refined_map->SO_fd = open(map_tex->SO_tex, O_RDONLY, 644);
 	refined_map->NO_fd = open(map_tex->NO_tex, O_RDONLY, 644);
 	refined_map->WE_fd = open(map_tex->WE_tex, O_RDONLY, 644);
-	refined_map->map = map;
+	check_open(refined_map);
 	refined_map->f_num = convert_int(map_tex->f_color);
 	refined_map->c_num = convert_int(map_tex->c_color);
 	free(map_tex->c_color);
@@ -223,4 +235,26 @@ void	check_map_elements(t_list *map)
 		}
 		map = map->next;
 	}
+}
+
+char	**transfer_map(t_list *map)
+{
+	char	**map_char;
+	int		i;
+
+	map_char = malloc(sizeof(char *) * ft_lstsize(map) + 1);
+	if (!map_char)
+	{
+		print_err("Error\nerror malloc\n");
+		exit(1);
+	}
+	i = 0;
+	while (map && map->content)
+	{
+		map_char[i] = map->content;
+		i++;
+		map = map->next;
+	}
+	map_char[i] = NULL;
+	return (map_char);
 }

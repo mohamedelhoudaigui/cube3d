@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 23:59:20 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 01:33:46 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:08:35 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	print_struct(t_tex_fd *tex)
 {
-	t_list	*map;
+	char	**map;
+	int		i;
 
 	printf("%d\n", tex->EA_fd);
 	printf("%d\n", tex->WE_fd);
@@ -23,10 +24,11 @@ void	print_struct(t_tex_fd *tex)
 	printf("[%d %d %d]\n", tex->c_num[0], tex->c_num[1], tex->c_num[2]);
 	printf("[%d %d %d]\n", tex->f_num[0], tex->f_num[1], tex->f_num[2]);
 	map = tex->map;
-	while (map && map->content)
+	i = 0;
+	while (map && map[i])
 	{
-		printf("%s\n", map->content);
-		map = map->next;
+		printf("%s\n", map[i]);
+		i++;
 	}
 }
 
@@ -71,18 +73,25 @@ bool check_tex(t_init_map *map)
     return (true);
 }
 
-void	free_data(t_init_map *map, t_list *data)
+void	free_data(t_init_map *tex, t_list *map)
 {
-	t_list	*map_p;
+	free(tex->SO_tex);
+	free(tex->WE_tex);
+	free(tex->NO_tex);
+	free(tex->EA_tex);
+	ft_lstclear(&map, &free);
+}
 
-	free(map->c_color);
-	free(map->f_color);
-	free(map->SO_tex);
-	free(map->WE_tex);
-	free(map->NO_tex);
-	free(map->EA_tex);
-	if (data)
-		ft_lstclear(&data, &free);
+void	free_int_convert(char **split)
+{
+	int	i;
+
+	print_err("Error\ncolor value is not in [0 - 255] range\n");
+	i = 0;
+	while (split && split[i])
+		free(split[i++]);
+	free(split);
+	exit(1);
 }
 
 int	*convert_int(char *numb)
@@ -98,7 +107,11 @@ int	*convert_int(char *numb)
 	i = 0;
 	while (i < 3)
 	{
+		if (ft_strlen(split[i]) > 3)
+			free_int_convert(split);
 		arr[i] = ft_atoi(split[i]);
+		if (arr[i] < 0 || arr[i] > 255)
+			free_int_convert(split);
 		i++;
 	}
 	i = 0;

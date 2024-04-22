@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 01:27:37 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:02:53 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef	struct	s_tex_fd
 	int		EA_fd;
 	int		*f_num;
 	int		*c_num;
-	t_list	*map;
+	char	**map;
 }				t_tex_fd;
 
 typedef struct s_init_map
@@ -50,15 +50,17 @@ t_init_map	*assign_line(t_list *data, t_init_map *map);
 bool		analyse_line(char *tmp);
 void		print_err(char *err_msg);
 bool		check_tex(t_init_map *map);
-void		free_data(t_init_map *map, t_list *data);
+void		free_data(t_init_map *tex, t_list *map);
 char		*replace(char **p_holder, char *set);
 void		validate_tex(t_list *head, t_init_map *init_data);
 int			*convert_int(char *numb);
 bool		help_check(char *part, int mode);
 void		check_borders(t_list *map);
-t_tex_fd	*open_fd(t_list *map, t_init_map *map_tex);
+t_tex_fd	*open_fd(t_init_map *map_tex);
+void		check_open(t_tex_fd *tex);
 void		check_map_elements(t_list *map);
 int			check_player(t_list *map);
 bool		check_spaces_inside(t_list *map);
+char		**transfer_map(t_list *map);
 
 #endif

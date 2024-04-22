@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:55:30 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 01:36:29 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:59:46 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,15 +135,19 @@ int main(int ac, char **av)
 	t_list		*map;
 	t_init_map	*init_data;
 	t_tex_fd	*refined_map;
+	char		**map_char;
 
 	valid_file(ac, av[1]);
 	head = fill_map(av[1]);
 	init_data = ft_calloc(sizeof(t_init_map), 1);
 	validate_tex(head, init_data);
 	map = isolate_map(head);
-	refined_map = open_fd(map, init_data);
+	refined_map = open_fd(init_data);
+	check_borders(map);
+	check_map_elements(map);
+	map_char = transfer_map(map);
+	free(map);
+	refined_map->map = map_char;
 	print_struct(refined_map);
-	check_borders(refined_map->map);
-	check_map_elements(refined_map->map);
 	exit (0);
 }
