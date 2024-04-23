@@ -6,11 +6,11 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:55:30 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 18:59:46 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:37:53 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 bool    valid_file(int ac, char *file)
 {
@@ -51,6 +51,8 @@ t_init_map	*assign_line(t_list *data, t_init_map *map)
 	{
 		tmp = data->content;
 		tmp = ft_strtrim(data->content, " ");
+		if (tmp[0] == '0' || tmp[0] == '1')
+			return (map);
 		if (analyse_line(tmp) == true)
 		{
 			if (ft_strncmp(tmp, "SO ", 3) == 0)
@@ -123,14 +125,19 @@ t_list	*isolate_map(t_list *head)
 	return (map);
 }	
 
-void	f()
+t_init_map	*null_init(t_init_map *init_data)
 {
-	system("leaks cub3D");
+	init_data->EA_tex = NULL;
+	init_data->NO_tex = NULL;
+	init_data->SO_tex = NULL;
+	init_data->WE_tex = NULL;
+	init_data->c_color = NULL;
+	init_data->f_color = NULL;
+	return (init_data);
 }
 
-int main(int ac, char **av)
+t_tex_fd	*parse(int ac, char **av)
 {
-	// atexit(f);
 	t_list		*head;
 	t_list		*map;
 	t_init_map	*init_data;
@@ -139,15 +146,14 @@ int main(int ac, char **av)
 
 	valid_file(ac, av[1]);
 	head = fill_map(av[1]);
-	init_data = ft_calloc(sizeof(t_init_map), 1);
+	init_data = gb_malloc(sizeof(t_init_map), 0);
+	init_data = null_init(init_data);
 	validate_tex(head, init_data);
 	map = isolate_map(head);
 	refined_map = open_fd(init_data);
 	check_borders(map);
 	check_map_elements(map);
 	map_char = transfer_map(map);
-	free(map);
 	refined_map->map = map_char;
-	print_struct(refined_map);
-	exit (0);
+	return (refined_map);
 }

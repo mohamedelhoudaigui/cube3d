@@ -6,24 +6,22 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 00:56:07 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 19:07:39 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:35:29 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 void	validate_tex(t_list *head, t_init_map *init_data)
 {
 	if (assign_line(head, init_data) == NULL)
 	{
 		print_err("Error\ntexture parsing error 1\n");
-		free_data(init_data, head);
 		exit(1);
 	}
 	if (check_tex(init_data) == false)
 	{
 		print_err("Error\ntexture parsing error 2\n");
-		free_data(init_data, head);
 		exit(1);
 	}
 }
@@ -41,7 +39,7 @@ t_tex_fd	*open_fd(t_init_map *map_tex)
 {
 	t_tex_fd	*refined_map;
 
-	refined_map = malloc(sizeof(t_tex_fd));
+	refined_map = gb_malloc(sizeof(t_tex_fd), 0);
 	if (!refined_map)
 	{
 		print_err("Error\nmalloc error\n");
@@ -54,13 +52,6 @@ t_tex_fd	*open_fd(t_init_map *map_tex)
 	check_open(refined_map);
 	refined_map->f_num = convert_int(map_tex->f_color);
 	refined_map->c_num = convert_int(map_tex->c_color);
-	free(map_tex->c_color);
-	free(map_tex->f_color);
-	free(map_tex->EA_tex);
-	free(map_tex->NO_tex);
-	free(map_tex->SO_tex);
-	free(map_tex->WE_tex);
-	free(map_tex);
 	return (refined_map);
 }
 
@@ -175,7 +166,7 @@ bool	check_spaces_inside(t_list *map)
 	int		j;
 
 	i = 0;
-	map_char = malloc(sizeof(char *) * ft_lstsize(map) + 1);
+	map_char = gb_malloc(sizeof(char *) * ft_lstsize(map) + 1, 0);
 	while (map && map->content)
 	{
 		map_char[i] = map->content;
@@ -196,7 +187,6 @@ bool	check_spaces_inside(t_list *map)
 					|| (i != 0 && map_char[i - 1][j] != '1' && map_char[i - 1][j] != ' ')
 					|| (i != ft_lstsize(map) - 1 && map_char[i + 1][j] != '1' && map_char[i + 1][j] != ' '))
 				{
-					free(map_char);	
 					return (false);
 				}
 			}
@@ -204,7 +194,6 @@ bool	check_spaces_inside(t_list *map)
 		}
 		i++;
 	}
-	free(map_char);
 	return (true);
 }
 
@@ -242,7 +231,7 @@ char	**transfer_map(t_list *map)
 	char	**map_char;
 	int		i;
 
-	map_char = malloc(sizeof(char *) * ft_lstsize(map) + 1);
+	map_char = gb_malloc(sizeof(char *) * ft_lstsize(map) + 1, 0);
 	if (!map_char)
 	{
 		print_err("Error\nerror malloc\n");

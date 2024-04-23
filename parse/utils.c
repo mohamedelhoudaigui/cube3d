@@ -6,11 +6,11 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 23:59:20 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 19:08:35 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:35:43 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
 void	print_struct(t_tex_fd *tex)
 {
@@ -49,7 +49,6 @@ char	*replace(char **p_holder, char *set)
 	char	*tmp;
 
 	tmp = ft_strtrim(*p_holder, set);
-	free(*p_holder);
 	return (tmp);
 }
 
@@ -73,24 +72,9 @@ bool check_tex(t_init_map *map)
     return (true);
 }
 
-void	free_data(t_init_map *tex, t_list *map)
-{
-	free(tex->SO_tex);
-	free(tex->WE_tex);
-	free(tex->NO_tex);
-	free(tex->EA_tex);
-	ft_lstclear(&map, &free);
-}
-
 void	free_int_convert(char **split)
 {
-	int	i;
-
 	print_err("Error\ncolor value is not in [0 - 255] range\n");
-	i = 0;
-	while (split && split[i])
-		free(split[i++]);
-	free(split);
 	exit(1);
 }
 
@@ -100,7 +84,7 @@ int	*convert_int(char *numb)
 	int		*arr;
 	int		i;
 
-	arr = malloc(sizeof(int) * 3);
+	arr = gb_malloc(sizeof(int) * 3, 0);
 	split = ft_split(numb, " ,");
 	if (!arr || !split)
 		exit(1);
@@ -114,9 +98,5 @@ int	*convert_int(char *numb)
 			free_int_convert(split);
 		i++;
 	}
-	i = 0;
-	while (split && split[i])
-		free(split[i++]);
-	free(split);
 	return (arr);
 }
