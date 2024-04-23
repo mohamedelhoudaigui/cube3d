@@ -1,10 +1,12 @@
-SRCS = ./parse/parse.c ./parse/utils.c ./parse/map_check.c ./raycasting/raycaster.c
+SRCS = ./parse/parse.c ./parse/utils.c ./parse/map_check.c ./raycasting/raycaster.c \
+		./raycasting/mlx_functions.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+OFLAGS =  -Wall -Wextra -Werror -g -lmlx -framework OpenGL -framework AppKit
+CFLAGS = -Wall -Wextra -Werror -c
 
 RM = rm -f
 
@@ -24,7 +26,7 @@ lib :
 	$(LIB)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_ARC)
+	$(CC) $(OFLAGS) -o $(NAME) $(OBJS) $(LIB_ARC)
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFlAGS) -c $< -o $@
