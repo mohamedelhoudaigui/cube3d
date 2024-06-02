@@ -6,14 +6,14 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/23 20:57:39 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/02 09:51:31 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 # define CUBE_H
 
-#include "./libft/libft.h"
+#include "./include/libft.h"
 
 # include <stdlib.h>
 # include <unistd.h>

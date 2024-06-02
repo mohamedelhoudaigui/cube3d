@@ -14,11 +14,11 @@ NAME = cub3D
 
 HEADERS = cube.h
 
-LIB = make -C ./libft
+LIB = make -C ./include
 
-LIB_PATH = ./libft
+LIB_PATH = ./include
 
-LIB_ARC = ./libft/libft.a
+LIB_ARC = ./include/libft.a
 
 all : lib $(NAME)
 
@@ -32,11 +32,11 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFlAGS) -c $< -o $@
 
 clean:
-	make -C ./libft clean
+	make -C ./include clean
 	$(RM) $(OBJS)
 
 fclean : clean
-	make -C ./libft fclean
+	make -C ./include fclean
 	$(RM) $(NAME)
 
 re : fclean all
