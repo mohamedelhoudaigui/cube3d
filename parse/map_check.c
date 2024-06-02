@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 00:56:07 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/23 18:35:29 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/02 09:48:36 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	check_borders(t_list *map)
 		{
 			if (!help_check(map->content, 1))
 			{
+				printf("here 2\n");
 				print_err("Error\ninvalid map\n");
 				exit(1);
 			}

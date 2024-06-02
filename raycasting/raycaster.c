@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 18:36:20 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/23 20:57:59 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/02 09:42:58 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@ int	main(int ac, char **av)
 	t_mlx		*mlx_struct;
 
 	full_map = parse(ac, av);
-	mlx_struct = init_mlx();
-
-	draw_map(full_map->map, mlx_struct);
-
-	//--------------------------
-	init_hooks(mlx_struct);
-	if (mlx_loop(mlx_struct->mlx_srv) != 0)
+	char **map = full_map->map;
+	int i = 0;
+	while (map[i])
 	{
-		print_err("Error\nmlx error\n");
-		exit(1);
+		printf("%s\n", map[i]);
+		i++;
 	}
-	return (0);
+	printf("floor %d %d %d\n", full_map->f_num[0], full_map->f_num[1], full_map->f_num[2]);
+	printf("floor %d %d %d\n", full_map->c_num[0], full_map->c_num[1], full_map->c_num[2]);
+	printf("EA %d\n", full_map->EA_fd);
+	printf("NO %d\n", full_map->NO_fd);
+	printf("WE %d\n", full_map->WE_fd);
+	printf("SO %d\n", full_map->SO_fd);
+	
+	mlx_struct = init_mlx();
 }
