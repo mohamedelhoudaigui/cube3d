@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_allnum.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 20:04:52 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 03:44:12 by mel-houd         ###   ########.fr       */
+/*   Created: 2024/06/03 00:32:49 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/06/03 00:39:39 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+bool    ft_allnum(char *s)
 {
-	char	*res;
-	int		i;
-	size_t	size;
+    int i;
 
-	i = 0;
-	size = ft_strlen(s1);
-	res = (char *)gb_malloc(size * sizeof(char) + 1, 0);
-	if (!res)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		res[i] = s1[i];
-	res[i] = '\0';
-	return (res);
+    if (!s)
+        return (false);
+    i = 0;
+    while (s[i])
+    {
+        if (s[i] < '0' || s[i] > '9')
+            return (false);
+        i++;
+    }
+    return (true);
 }

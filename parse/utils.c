@@ -5,98 +5,131 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 23:59:20 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/23 18:35:43 by mel-houd         ###   ########.fr       */
+/*   Created: 2024/06/02 22:53:46 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/06/03 03:57:29 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-void	print_struct(t_tex_fd *tex)
+t_init_map	*null_init(void)
 {
-	char	**map;
-	int		i;
+    t_init_map  *init_data;
 
-	printf("%d\n", tex->EA_fd);
-	printf("%d\n", tex->WE_fd);
-	printf("%d\n", tex->SO_fd);
-	printf("%d\n", tex->EA_fd);
-	printf("[%d %d %d]\n", tex->c_num[0], tex->c_num[1], tex->c_num[2]);
-	printf("[%d %d %d]\n", tex->f_num[0], tex->f_num[1], tex->f_num[2]);
-	map = tex->map;
-	i = 0;
-	while (map && map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
+    init_data = gb_malloc(sizeof(t_init_map), 0);
+	init_data->EA_tex = NULL;
+	init_data->NO_tex = NULL;
+	init_data->SO_tex = NULL;
+	init_data->WE_tex = NULL;
+	init_data->c_color = NULL;
+	init_data->f_color = NULL;
+	return (init_data);
 }
 
-void	print_err(char *err_msg)
+t_morphed	*null_init2(t_init_map *data)
 {
-	write(2, err_msg, ft_strlen(err_msg));
+    t_morphed  *init_data;
+
+    init_data = gb_malloc(sizeof(t_morphed), 0);
+	init_data->EA_tex = ft_strdup(data->EA_tex);
+	init_data->NO_tex = ft_strdup(data->NO_tex);
+	init_data->SO_tex = ft_strdup(data->SO_tex);
+	init_data->WE_tex = ft_strdup(data->WE_tex);
+	init_data->c_num = NULL;
+	init_data->f_num = NULL;
+    init_data->map = NULL;
+	return (init_data);
 }
 
-bool	analyse_line(char *tmp)
+char *ft_trim_end(char *str, char *set)
 {
-	if (tmp[0] == '\n' && tmp[1] == '\0')
-		return (false);
-	return (true);
+    size_t  len;
+    char    *newstr;
+
+    if (str == NULL)
+        return (NULL);
+    len = ft_strlen(str);
+    while (len > 0 && ft_strchr(set, str[len - 1]))
+        len--;
+    newstr = gb_malloc(len + 1, 0);
+    if (newstr == NULL)
+        return NULL;
+    ft_strlcpy(newstr, str, len + 1);
+    newstr[len + 1] = '\0';
+    return (newstr);
 }
 
-char	*replace(char **p_holder, char *set)
+bool    check_equal(char *s1, char *s2)
 {
-	char	*tmp;
+    int i;
+    int j;
 
-	tmp = ft_strtrim(*p_holder, set);
-	return (tmp);
-}
-
-bool check_tex(t_init_map *map)
-{
-    if (!map->c_color
-        || !map->f_color
-        || !map->EA_tex
-        || !map->NO_tex
-        || !map->SO_tex
-        || !map->WE_tex)
-    {
+    if (s1[0] == '\0')
         return (false);
+    i = 0;
+    j = 0;
+    while (s1[i] == ' ')
+        i++;
+    while (s1[i] && s2[j])
+    {
+        if (s1[i] != s2[j])
+            return (false);
+        i++;
+        j++;
     }
-    map->c_color = replace(&map->c_color, "C \n");
-    map->f_color = replace(&map->f_color, "F \n");
-    map->EA_tex = replace(&map->EA_tex, "EA \n");
-    map->SO_tex = replace(&map->SO_tex, "SO \n");
-    map->NO_tex = replace(&map->NO_tex, "NO \n");
-    map->WE_tex = replace(&map->WE_tex, "WE \n");
     return (true);
 }
 
-void	free_int_convert(char **split)
+bool    check_chars(char *s, char *set)
 {
-	print_err("Error\ncolor value is not in [0 - 255] range\n");
-	exit(1);
+    int i;
+
+    if (!s || !set)
+        return (false);
+    i = 0;
+    while (s[i])
+    {
+        if (!ft_strchr(set, s[i]))
+            return (false);
+        i++;
+    }
+    return (true);
 }
 
-int	*convert_int(char *numb)
+int biggest_line(t_list *map)
 {
-	char	**split;
-	int		*arr;
-	int		i;
+    int max;
 
-	arr = gb_malloc(sizeof(int) * 3, 0);
-	split = ft_split(numb, " ,");
-	if (!arr || !split)
-		exit(1);
-	i = 0;
-	while (i < 3)
-	{
-		if (ft_strlen(split[i]) > 3)
-			free_int_convert(split);
-		arr[i] = ft_atoi(split[i]);
-		if (arr[i] < 0 || arr[i] > 255)
-			free_int_convert(split);
-		i++;
-	}
-	return (arr);
+    max = 0;
+    while (map)
+    {
+        if (ft_strlen(map->content) >= max)
+            max = ft_strlen(map->content);
+        map = map->next;
+    }
+    return (max);
+}
+
+
+char    *morph_line(char *str, int len, char append)
+{
+    char    *res;
+    int     i;
+
+    if (ft_strlen(str) < len)
+    {
+        res = gb_malloc(sizeof(char) * len + 1, 0);
+        i = 0;
+        while (str[i])
+        {
+            res[i] = str[i];
+            i++;
+        }
+        while (i < len)
+            res[i++] = append;
+        res[i] = '\0';
+        free(str);
+        return (ft_strdup(res));
+    }
+    return (str);
 }

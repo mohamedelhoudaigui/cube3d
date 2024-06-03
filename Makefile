@@ -1,4 +1,4 @@
-SRCS = ./parse/parse.c ./parse/utils.c ./parse/map_check.c ./raycasting/raycaster.c \
+SRCS = ./parse/parse.c ./parse/utils.c ./raycasting/raycaster.c \
 		./raycasting/mlx_functions.c
 
 OBJS = $(SRCS:.c=.o)

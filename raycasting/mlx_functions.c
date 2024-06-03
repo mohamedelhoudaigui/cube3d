@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 18:52:27 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/02 09:39:24 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:36:24 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_mlx	*init_mlx(void)
 	mlx_struct->mlx_win = mlx_new_window(mlx_struct->mlx_srv, X, Y, TITLE);
 	if (!mlx_struct->mlx_srv || !mlx_struct->mlx_win)
 	{
-		print_err("Error\nmlx init error\n");
+		write(2, "Error\nmlx init error\n", 22);
 		exit(1);
 	}
 	return (mlx_struct);
