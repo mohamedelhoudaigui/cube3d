@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 03:57:48 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:23:24 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <fcntl.h>
 # include <mlx.h>
 
-# define X 600
-# define Y 600
+# define X 1000
+# define Y 1000
 # define TITLE "cub3D"
 
 typedef	struct	s_morphed
@@ -35,7 +35,7 @@ typedef	struct	s_morphed
 	char	*EA_tex;
 	int		*f_num;
 	int		*c_num;
-	t_list	*map;
+	char	**map;
 }				t_morphed;
 
 typedef struct s_init_map
@@ -70,14 +70,21 @@ typedef	struct s_mlx
 
 t_morphed	*parse(int ac, char **av);
 t_init_map	*null_init(void);
+t_morphed	*null_init2(t_init_map *data);
 char		*ft_trim_end(char *str, char *set);
 bool    	check_equal(char *s1, char *s2);
 void		assign_lines(t_list *head, t_init_map **init_data_p);
 t_list		*from_file(char *file_name, t_list **head);
-t_morphed	*null_init2(t_init_map *data);
 bool    	check_chars(char *s, char *set);
 int			biggest_line(t_list *map);
 char   	 	*morph_line(char *str, int len, char append);
+bool		check_borders(char **map);
+bool		check_map_elements(char **map);
+bool		check_line(char *s, int mode);
+char		**alter_map(t_init_map *init_data);
+void		assign_color(t_init_map *init_data, t_morphed *refined_map);
+int			*extract_color(char *color);
+void		print_morphed(t_morphed *data);
 
 //------------raycasting headers :
 t_mlx	*init_mlx(void);

@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:55:30 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 04:09:01 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:21:27 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,75 +126,142 @@ void	assign_color(t_init_map *init_data, t_morphed *refined_map)
 	refined_map->c_num = extract_color(init_data->c_color);
 }
 
-// void	check_map_borders(t_morphed *refined_map)
-// {
-// 	char	**map;
-// 	int		len;
-// 	int		i;
-// 	int		j;
-
-// 	map = refined_map->map;
-// 	len = 0;
-// 	while (map[len])
-// 		len++;
-// 	i = 0;
-// 	while (map[i])
-// 	{
-// 		if (i == 0 || i == len - 1)
-// 		{
-// 			if (!check_chars(map[i], " 1"))
-// 			{
-// 				write(2, "Error\nerror in line 0 or len - 1\n", 33);
-// 				exit(1);
-// 			}
-// 		}
-// 		else
-// 		{
-// 			j = 0;
-// 			while (map[i][j] == ' ')
-// 				j++;
-// 			if (map[i][j] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
-// 			{
-// 				write(2, "Error\nborder error\n", 19);
-// 				exit(1);
-// 			}
-// 			while (map[i][j])
-// 			{
-				
-// 			}
-// 		}
-// 	}
-// }
-
-
-
-
-
-
-void	print_tex(t_morphed *texs)
+char	**alter_map(t_init_map *init_data)
 {
-	t_list *map;
+	char	**res;
+	t_list	*data;
+	int		i;
+	int		len;
 
-	// printf("%s\n", texs->SO_tex);
-	// printf("%s\n", texs->EA_tex);
-	// printf("%s\n", texs->WE_tex);
-	// printf("%s\n", texs->NO_tex);
-	map = texs->map;
-	while (map)
+	data = init_data->map;
+	res = gb_malloc(sizeof(char *) * ft_lstsize(data) + 1, 0);
+	i = 0;
+	len = biggest_line(data);
+	while (data)
 	{
-		printf("%p\n", map->content);
-		map = map->content;
-	}	
+		res[i] = morph_line(data->content, len, ' ');
+		i++;
+		data = data->next;
+	}
+	res[i] = NULL;
+	return (res);
 }
 
-void	f()
+bool	check_line(char *s, int mode)
 {
-	system("leaks cub3D");
+	int	i;
+	
+	i = 0;
+	if (mode == 0)
+	{
+		while (s[i])
+		{
+			if (s[i] != ' ' && s[i] != '1')
+				return (false);
+			i++;
+		}
+		return (true);	
+	}
+	while (s[i])
+	{
+		if (ft_strchr("SNWE01 ", s[i]) == NULL)
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
-int	main(int ac, char **av)
+bool	check_map_elements(char **map)
 {
-	// atexit(f);
+	bool	player;
+	int		mode;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (map[i])
+	{
+		if (i == 0 || i == ft_doubleptr_size(map) - 1)
+			mode = 0;
+		else
+			mode = 1;
+		if (!check_line(map[i], mode))
+		{
+			write(2, "Error\nmap elements error\n", 25);
+			exit(1);
+		}
+		if (ft_strchr(map[i], 'N') || ft_strchr(map[i], 'W')
+			|| ft_strchr(map[i], 'E') || ft_strchr(map[i], 'S'))
+		{
+			player = true;
+		}
+		i++;
+	}
+	if (!player)
+	{
+		write(2, "Error\nno player error\n", 22);
+		exit(1);
+	}
+	return (true);
+}
+
+bool	check_borders(char **map)
+{
+	int		x;
+	int		y;
+	int		max_x;
+	int		max_y;
+	bool	border;
+
+	y = 1;
+	max_x = ft_strlen(map[0]) - 1;
+	max_y = ft_doubleptr_size(map) - 1;
+	border = true;
+	while (y < max_y)
+	{
+		x = 1;
+		while (x < max_x)
+		{
+			if (map[y][x] == ' ')
+			{
+				if (!ft_strchr(" 1", map[y - 1][x]))
+					border = false;
+				if (!ft_strchr(" 1", map[y + 1][x]))
+					border = false;
+				if (!ft_strchr(" 1", map[y][x - 1]))
+					border = false;
+				if (!ft_strchr(" 1", map[y][x + 1]))
+					border = false;
+			}
+			x++;
+		}
+		y++;
+	}
+	if (!border)
+	{
+		write(2, "Error\nborder error\n", 19);
+		exit(1);
+	}
+	return (true);
+}
+
+void	print_morphed(t_morphed *data)
+{
+	int	i;
+
+	printf("%s\n", data->EA_tex);
+	printf("%s\n", data->WE_tex);
+	printf("%s\n", data->NO_tex);
+	printf("%s\n", data->SO_tex);
+	printf("c color = %d %d %d\n", data->c_num[0], data->c_num[1], data->c_num[2]);
+	printf("f color = %d %d %d\n", data->f_num[0], data->f_num[1], data->f_num[2]);
+	i = 0;
+	while (data->map[i])
+		printf("%s\n", data->map[i++]);	
+}
+
+t_morphed	*parse(int ac, char **av)
+{
 	t_list		*head;
 	t_list		*map;
 	char		**map_char;
@@ -211,6 +278,10 @@ int	main(int ac, char **av)
 	assign_lines(head, &init_data);
 	refined_map = null_init2(init_data);
 	assign_color(init_data, refined_map);
-	
-	return (0);
+	map_char = alter_map(init_data);
+	refined_map->map = map_char;
+	check_map_elements(refined_map->map);
+	check_borders(refined_map->map);
+	print_morphed(refined_map);
+	return (refined_map);
 }

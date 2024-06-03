@@ -1,1 +1,1 @@
-error in basic map 2
+done tested with 3 maps + no leaks , exit in every corner

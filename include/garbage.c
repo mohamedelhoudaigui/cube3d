@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbge.c                                           :+:      :+:    :+:   */
+/*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:44:19 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/04/22 23:29:44 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/03 07:56:22 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	*gb_malloc(size_t size, int type)
 		if (!(addr = malloc(size)))
 		{
 			clear_list(list);
-			return (NULL);
+			write(2, "Error\nmalloc error\n", 19);
+			exit (1);
 		}
 		if (!(node = malloc(sizeof(t_garb))))
 		{

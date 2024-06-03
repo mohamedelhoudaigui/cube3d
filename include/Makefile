@@ -9,7 +9,8 @@ SRCS			=	ft_isalpha.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 					ft_lstadd_front_bonus.c ft_lstclear_bonus.c \
 					ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstlast_bonus.c \
 					ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c ft_lstprint_str.c \
-					ft_memdel.c ft_strdel.c ft_strsub.c ft_strnew.c garbage.c ft_allnum.c
+					ft_memdel.c ft_strdel.c ft_strsub.c ft_strnew.c garbage.c ft_allnum.c \
+					ft_doubleptr_size.c
 
 OBJS			= $(SRCS:.c=.o)
 

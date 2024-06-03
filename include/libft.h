@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:17:37 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 00:34:47 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/03 08:27:07 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len);
 void	ft_strdel(char **as);
 void	ft_memdel(void **ap);
 char	*ft_strnew(size_t size);
+int		ft_doubleptr_size(char **s);
 
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

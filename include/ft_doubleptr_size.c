@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage.h                                            :+:      :+:    :+:   */
+/*   ft_doubleptr_size.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:17:29 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/03/06 00:59:29 by mel-houd         ###   ########.fr       */
+/*   Created: 2024/06/03 08:25:33 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/06/03 08:26:34 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GARBAGE_H
+#include "libft.h"
 
-# define GARBAGE_H
-
-# include <stdlib.h>
-# include <unistd.h>
-
-typedef struct s_garb
+int ft_doubleptr_size(char **s)
 {
-	void			*addr;
-	struct s_garb	*next;
-}				t_garb ;
+    int i;
 
-void	clear_list(t_garb *list);
-void	add_node(t_garb **list, t_garb *node);
-void	*gb_malloc(size_t size, int type);
-
-#endif
+    if (!s)
+        return (-1);
+    i = 0;
+    while (s[i])
+        i++;
+    return (i);
+}

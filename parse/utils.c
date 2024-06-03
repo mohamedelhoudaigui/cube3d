@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 22:53:46 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 03:57:29 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/03 09:13:10 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ t_morphed	*null_init2(t_init_map *data)
     t_morphed  *init_data;
 
     init_data = gb_malloc(sizeof(t_morphed), 0);
-	init_data->EA_tex = ft_strdup(data->EA_tex);
-	init_data->NO_tex = ft_strdup(data->NO_tex);
-	init_data->SO_tex = ft_strdup(data->SO_tex);
-	init_data->WE_tex = ft_strdup(data->WE_tex);
+	init_data->EA_tex = ft_strtrim(data->EA_tex, "EA ");
+	init_data->NO_tex = ft_strtrim(data->NO_tex, "NO ");
+	init_data->SO_tex = ft_strtrim(data->SO_tex, "SO ");
+	init_data->WE_tex = ft_strtrim(data->WE_tex, "WE ");
 	init_data->c_num = NULL;
 	init_data->f_num = NULL;
     init_data->map = NULL;
