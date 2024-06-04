@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 18:52:27 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 01:59:41 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/04 07:28:08 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@ int	close_window(t_mlx *mlx_ptr)
 	exit(0);
 }
 
-int	key_hook(int keycode, t_mlx *mlx_ptr)
-{
-	if (keycode == 53)
-		close_window(mlx_ptr);
-	return (0);
-}
-
 t_mlx	*init_mlx(t_morphed *map)
 {
 	t_mlx	*mlx_struct;
 	t_data	*img;
+	int		*player_pos;
 	
 
 	mlx_struct = gb_malloc(sizeof(t_mlx), 0);
@@ -44,6 +38,15 @@ t_mlx	*init_mlx(t_morphed *map)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 	mlx_struct->img = img;
 	mlx_struct->map = map;
+	player_pos = get_player_pos(map->map);
+	if (map->map[player_pos[0]][player_pos[1]] == 'N')
+		mlx_struct->angle = -135;
+	if (map->map[player_pos[0]][player_pos[1]] == 'S')
+		mlx_struct->angle = 45;
+	if (map->map[player_pos[0]][player_pos[1]] == 'W')
+		mlx_struct->angle = 135;
+	if (map->map[player_pos[0]][player_pos[1]] == 'E')
+		mlx_struct->angle = -45;
 	return (mlx_struct);
 }
 

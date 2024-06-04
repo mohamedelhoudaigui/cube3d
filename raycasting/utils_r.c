@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycaster.c                                        :+:      :+:    :+:   */
+/*   utils_r.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 18:36:20 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 06:21:58 by mel-houd         ###   ########.fr       */
+/*   Created: 2024/06/04 02:45:15 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/06/04 02:55:42 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-void    f()
+int *get_player_pos(char **map)
 {
-    system("leaks cub3D");
-}
-
-int	main(int ac, char **av)
-{
-	t_morphed	*full_map;
-	t_mlx		*mlx_struct;
-	char		*map;
-
-	full_map = parse(ac, av);
-	// print_morphed(full_map);
-	
-	mlx_struct = init_mlx(full_map);
-	map = mlx_struct->img->addr;
-	draw_map(mlx_struct);
-    init_hooks(mlx_struct);
-    mlx_loop(mlx_struct->mlx_srv);
-    exit(0);
+    int i;
+    int j;
+    int *pos;
+    
+    i = 0;
+    pos = gb_malloc(sizeof(int) * 2, 0);
+    while (i < ft_doubleptr_size(map))
+    {
+        j = 0;
+        while (j < ft_strlen(map[0]))
+        {
+            if (ft_strchr("SNWE", map[i][j]))
+            {
+                pos[0] = i;
+                pos[1] = j;
+            }
+            j++;
+        }
+        i++;
+    }
+    return (pos);
 }

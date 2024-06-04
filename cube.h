@@ -6,9 +6,23 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 02:03:34 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/04 07:35:36 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// angles :
+// 45 - down
+// -45 - right
+// 135 - left
+// -135 - up
+
+
+// keys :
+// right 124
+// down 125
+// left 123
+// up 126
+
 
 #ifndef CUBE_H
 # define CUBE_H
@@ -25,7 +39,9 @@
 
 # define X 1000
 # define Y 1000
+# define PI 3.14159265
 # define TITLE "cub3D"
+# define ANGEL_OFFSET 10
 
 typedef	struct	s_morphed
 {
@@ -66,6 +82,7 @@ typedef	struct s_mlx
 	void		*mlx_win;
 	t_data		*img;
 	t_morphed	*map;
+	int			angle;
 }				t_mlx;
 
 typedef struct s_vector
@@ -99,7 +116,7 @@ void		print_morphed(t_morphed *data);
 
 //------------raycasting headers :
 t_mlx	*init_mlx(t_morphed *full_map);
-int		key_hook(int keycode, t_mlx *mlx_ptr);
+int		key_hook(int keycode, t_mlx *mlx_struct);
 int		close_window(t_mlx *mlx_ptr);
 void	init_hooks(t_mlx *mlx_struct);
 int		get_color(int r, int g, int b);
@@ -107,6 +124,14 @@ int 	get_char_color(char map_char);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void    draw_map(t_mlx *mlx_struct);
 void    draw_square(t_vector *map_element, t_mlx *mlx_struct);
+void    draw_map_line(t_vector *map_element, t_mlx *mlx_struct);
+int 	*get_player_pos(char **map);
+void    move_up(t_mlx *mlx_struct);
+void    move_down(t_mlx *mlx_struct);
+void    move_left(t_mlx *mlx_struct);
+void    move_right(t_mlx *mlx_struct);
+void    draw_line(t_vector *line, t_mlx *mlx_struct);
+void    draw_rays(t_mlx *mlx_struct);
 
 
 #endif
