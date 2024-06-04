@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 06:26:42 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 07:47:46 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/04 08:41:51 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void    draw_line(t_vector *line, t_mlx *mlx_struct)
 	double pixelY = line->y_start;
 	while (pixels)
 	{
+		if (get_pixel(mlx_struct->img, pixelX, pixelY) == 92)
+			break ;
 		my_mlx_pixel_put(mlx_struct->img, pixelX, pixelY, get_char_color('.'));
 		pixelX += deltaX;
 		pixelY += deltaY;
@@ -50,7 +52,7 @@ void    draw_rays(t_mlx *mlx_struct)
 		offset = Y / ft_doubleptr_size(map);
 	else
 		offset = X / ft_strlen(map[0]);
-	length = 100;
+	length = 1000;
 	player_pos[0] *= offset;
 	player_pos[1] *= offset;
 	player_ray = gb_malloc(sizeof(t_vector), 0);

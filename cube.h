@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 07:35:36 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/04 08:32:48 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	init_hooks(t_mlx *mlx_struct);
 int		get_color(int r, int g, int b);
 int 	get_char_color(char map_char);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+char	get_pixel(t_data *data, int x, int y);
 void    draw_map(t_mlx *mlx_struct);
 void    draw_square(t_vector *map_element, t_mlx *mlx_struct);
 void    draw_map_line(t_vector *map_element, t_mlx *mlx_struct);
