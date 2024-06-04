@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 09:23:24 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/04 02:03:34 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,31 @@ typedef struct s_init_map
 
 //-----------------------------------
 
-typedef struct s_img
+typedef struct s_data
 {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_img;
+}				t_data;
 
 typedef	struct s_mlx
 {
-	void	*mlx_srv;
-	void	*mlx_win;
+	void		*mlx_srv;
+	void		*mlx_win;
+	t_data		*img;
+	t_morphed	*map;
 }				t_mlx;
+
+typedef struct s_vector
+{
+	int		x_start;
+	int		y_start;
+	int		x_finish;
+	int		y_finish;
+	char	map_char;
+}				t_vector;
 
 //----------parsing headers :
 
@@ -87,10 +98,15 @@ int			*extract_color(char *color);
 void		print_morphed(t_morphed *data);
 
 //------------raycasting headers :
-t_mlx	*init_mlx(void);
+t_mlx	*init_mlx(t_morphed *full_map);
 int		key_hook(int keycode, t_mlx *mlx_ptr);
 int		close_window(t_mlx *mlx_ptr);
 void	init_hooks(t_mlx *mlx_struct);
+int		get_color(int r, int g, int b);
+int 	get_char_color(char map_char);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void    draw_map(t_mlx *mlx_struct);
+void    draw_square(t_vector *map_element, t_mlx *mlx_struct);
 
 
 #endif

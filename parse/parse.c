@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:55:30 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/03 09:21:27 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:27:35 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,5 @@ t_morphed	*parse(int ac, char **av)
 	refined_map->map = map_char;
 	check_map_elements(refined_map->map);
 	check_borders(refined_map->map);
-	print_morphed(refined_map);
 	return (refined_map);
 }

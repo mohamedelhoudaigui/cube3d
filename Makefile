@@ -1,5 +1,5 @@
 SRCS = ./parse/parse.c ./parse/utils.c ./raycasting/raycaster.c \
-		./raycasting/mlx_functions.c
+		./raycasting/mlx_functions.c ./raycasting/draw_funcs.c
 
 OBJS = $(SRCS:.c=.o)
 
