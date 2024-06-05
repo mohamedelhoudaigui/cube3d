@@ -6,13 +6,13 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 06:26:42 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/05 01:36:43 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/05 04:21:49 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-void    draw_line(t_vector *line, t_mlx *mlx_struct)
+void    draw_line(t_vector *line, t_mlx *mlx_struct, t_data *chosen_img)
 {
 	double	deltaX;
 	double	deltaY;
@@ -31,9 +31,9 @@ void    draw_line(t_vector *line, t_mlx *mlx_struct)
 	pixel_num = 0;
 	while (pixels)
 	{
-		if (get_pixel(mlx_struct->img, pixelX, pixelY) == 92)
+		if (get_pixel(chosen_img, pixelX, pixelY) == 92)
 			break ;
-		my_mlx_pixel_put(mlx_struct->img, pixelX, pixelY, get_char_color('.'));
+		my_mlx_pixel_put(chosen_img, pixelX, pixelY, get_char_color('.'));
 		pixelX += deltaX;
 		pixelY += deltaY;
 		pixels--;
@@ -75,7 +75,7 @@ void    draw_rays(t_mlx *mlx_struct)
 		player_ray->x_finish = player_ray->x_start + length * cos(rad);
 		player_ray->y_finish = player_ray->y_start + length * sin(rad);
 		player_ray->map_char = '.';
-		draw_line(player_ray, mlx_struct);
+		draw_line(player_ray, mlx_struct, mlx_struct->img);
 		start_angle += 1;
 	}
 }

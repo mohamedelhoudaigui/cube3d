@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/05 02:31:07 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/05 04:21:28 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void    move_up(t_mlx *mlx_struct);
 void    move_down(t_mlx *mlx_struct);
 void    move_left(t_mlx *mlx_struct);
 void    move_right(t_mlx *mlx_struct);
-void    draw_line(t_vector *line, t_mlx *mlx_struct);
+void    draw_line(t_vector *line, t_mlx *mlx_struct, t_data *chosen_img);
 void    draw_rays(t_mlx *mlx_struct);
 void    draw_rays_img(t_mlx *mlx_struct);
 void    put_img(t_mlx *mlx_struct, t_data *chosen_img);
