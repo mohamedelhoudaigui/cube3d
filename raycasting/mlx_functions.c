@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 18:52:27 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 08:32:35 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:25:02 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_mlx	*init_mlx(t_morphed *map)
 {
 	t_mlx	*mlx_struct;
 	t_data	*img;
+	t_data	*rays_img;
 	int		*player_pos;
 	
 
@@ -34,9 +35,13 @@ t_mlx	*init_mlx(t_morphed *map)
 		exit(1);
 	}
 	img = gb_malloc(sizeof(t_data), 0);
+	rays_img = gb_malloc(sizeof(t_data), 0);
 	img->img = mlx_new_image(mlx_struct->mlx_srv, X, Y);
+	rays_img->img = mlx_new_image(mlx_struct->mlx_srv, X, Y);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
+	rays_img->addr = mlx_get_data_addr(rays_img->img, &rays_img->bits_per_pixel, &rays_img->line_length, &rays_img->endian);
 	mlx_struct->img = img;
+	mlx_struct->rays_img = rays_img;
 	mlx_struct->map = map;
 	player_pos = get_player_pos(map->map);
 	if (map->map[player_pos[0]][player_pos[1]] == 'N')

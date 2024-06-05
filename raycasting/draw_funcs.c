@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 06:26:42 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 08:41:51 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/05 01:36:43 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void    draw_line(t_vector *line, t_mlx *mlx_struct)
 {
-	double deltaX;
-	double deltaY;
-	int    pixels;
+	double	deltaX;
+	double	deltaY;
+	int		pixels;
+	t_list	*node;
+	int		*value;
+	int		pixel_num;
 
 	deltaY = line->y_finish - line->y_start;
 	deltaX = line->x_finish - line->x_start;
@@ -25,6 +28,7 @@ void    draw_line(t_vector *line, t_mlx *mlx_struct)
 	deltaY /= pixels; // 0
 	double pixelX = line->x_start;
 	double pixelY = line->y_start;
+	pixel_num = 0;
 	while (pixels)
 	{
 		if (get_pixel(mlx_struct->img, pixelX, pixelY) == 92)
@@ -33,7 +37,12 @@ void    draw_line(t_vector *line, t_mlx *mlx_struct)
 		pixelX += deltaX;
 		pixelY += deltaY;
 		pixels--;
+		pixel_num++;
 	}
+	value = gb_malloc(sizeof(int), 0);
+	*value = pixel_num;
+	node = ft_lstnew(value);
+	ft_lstadd_back(&mlx_struct->rays_inter, node);
 }
 
 void    draw_rays(t_mlx *mlx_struct)

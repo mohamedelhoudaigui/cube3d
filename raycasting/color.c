@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 06:22:21 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 06:22:51 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:14:51 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int get_char_color(char map_char)
             break ;
         case '.':
             color = get_color(0, 128, 0);
+            break ;
+        case 'c':
+            color = get_color(135, 206, 235);
+            break ;
+        case 'f':
+            color = get_color(88, 57, 39);
             break ;
         default :
             color = get_color(240, 230, 140);

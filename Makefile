@@ -1,7 +1,8 @@
 SRCS = ./parse/parse.c ./parse/utils.c ./raycasting/raycaster.c \
 		./raycasting/mlx_functions.c ./raycasting/map_draw.c \
 		./raycasting/key_hooks.c ./raycasting/utils_r.c ./raycasting/color.c \
-		./raycasting/draw_funcs.c
+		./raycasting/draw_funcs.c ./raycasting/apply_raycasting.c \
+		./raycasting/put_img_to_window.c
 
 OBJS = $(SRCS:.c=.o)
 

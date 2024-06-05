@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 08:52:41 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/04 08:32:48 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/06/05 02:31:07 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ typedef	struct s_mlx
 	void		*mlx_srv;
 	void		*mlx_win;
 	t_data		*img;
+	t_data		*rays_img;
 	t_morphed	*map;
 	int			angle;
+	t_list		*rays_inter;
 }				t_mlx;
 
 typedef struct s_vector
@@ -125,7 +127,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 char	get_pixel(t_data *data, int x, int y);
 void    draw_map(t_mlx *mlx_struct);
 void    draw_square(t_vector *map_element, t_mlx *mlx_struct);
-void    draw_map_line(t_vector *map_element, t_mlx *mlx_struct);
+void    draw_map_line(t_vector *map_element, t_mlx *mlx_struct, t_data *img);
 int 	*get_player_pos(char **map);
 void    move_up(t_mlx *mlx_struct);
 void    move_down(t_mlx *mlx_struct);
@@ -133,6 +135,9 @@ void    move_left(t_mlx *mlx_struct);
 void    move_right(t_mlx *mlx_struct);
 void    draw_line(t_vector *line, t_mlx *mlx_struct);
 void    draw_rays(t_mlx *mlx_struct);
+void    draw_rays_img(t_mlx *mlx_struct);
+void    put_img(t_mlx *mlx_struct, t_data *chosen_img);
+
 
 
 #endif
