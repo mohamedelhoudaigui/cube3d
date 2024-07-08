@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 02:37:59 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/05 02:34:58 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:44:17 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,6 @@ int	key_hook(int keycode, t_mlx *mlx_struct)
 		move_up(mlx_struct);
 	draw_map(mlx_struct);
 	draw_rays_img(mlx_struct);
-	put_img(mlx_struct, mlx_struct->rays_img);
+	put_img(mlx_struct, mlx_struct->img);
 	return (0);
 }

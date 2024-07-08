@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 18:36:20 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/06/05 02:32:50 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:44:24 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av)
 	mlx_struct = init_mlx(full_map);
 	draw_map(mlx_struct);
 	draw_rays_img(mlx_struct);
-	put_img(mlx_struct, mlx_struct->rays_img);
+	put_img(mlx_struct, mlx_struct->img);
     init_hooks(mlx_struct);
     mlx_loop(mlx_struct->mlx_srv);
     exit(0);
