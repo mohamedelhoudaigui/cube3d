@@ -6,14 +6,11 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:44:19 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 09:44:35 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:41:25 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "garbage.h"
-# include <stdio.h>
-
-// this implementation can hold up to 16384 addresses after that its gonna crash :)
 
 void	*gb_malloc(size_t size, int type)
 {
@@ -31,11 +28,8 @@ void	*gb_malloc(size_t size, int type)
 		addr = malloc(size);
 		if (!addr)
 		{
-			while (i)
-			{
+			while (i--)
 				free(all[i]);
-				i--;
-			}
 			write(2, "malloc error !", 14);
 			exit (1);
 		}

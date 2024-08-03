@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:10 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 15:14:31 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:44:37 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_map
 	char	*color_c;
 }				t_map;
 
-typedef	struct	s_data
+typedef struct s_data
 {
 	char	**map;
 	char	*no_tex;
@@ -89,5 +89,7 @@ void	check_chars_g(char a, char b, char c, char d);
 int		biggest_line(char **map);
 char	**alter_map(char **map);
 char	*append_spaces(char *line, int size);
+void	check_textures(t_data **map_data_adr);
+t_data	*parse_entry(int ac, char **av);
 
 #endif

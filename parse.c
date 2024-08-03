@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:08 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 09:42:58 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:36:02 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ t_map	*parse(char *map)
 	t_node	*map_list;
 	int		fd;
 
-	fd = open_file(map), map_list = NULL, all_map = gb_malloc(sizeof(t_map), 0);
+	fd = open_file(map);
+	map_list = NULL;
+	all_map = gb_malloc(sizeof(t_map), 0);
 	init(&all_map);
 	while (true)
 	{

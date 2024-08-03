@@ -6,18 +6,18 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:12 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 16:01:33 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:46:30 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	f()
+void	f(void)
 {
 	system("leaks cub3D");
 }
 
-int	main(int ac, char **av)
+t_data	*parse_entry(int ac, char **av)
 {
 	t_map	*map;
 	t_data	*map_data;
@@ -27,16 +27,26 @@ int	main(int ac, char **av)
 	map = parse(av[1]);
 	validate(&map);
 	map_data = transform(&map);
-	//printf("%s\n", map_data->no_tex);
-	//printf("%s\n", map_data->so_tex);
-	//printf("%s\n", map_data->ea_tex);
-	//printf("%s\n", map_data->we_tex);
-	//printf("%X\n", map_data->color_c);
-	//printf("%X\n", map_data->color_f);
-	//char **gg = map_data->map;
-	//int	i = 0;
-	//while (gg[i++])
-	//	printf("%s\n", gg[i]);
-
-	exit(0);
+	//check_textures(&map_data);
+	return (map_data);
 }
+
+int	main(int ac, char **av)
+{
+	t_data	*map_data;
+
+	atexit(f);
+	map_data = parse_entry(ac, av);
+	printf("%s\n", map_data->no_tex);
+	printf("%s\n", map_data->so_tex);
+	printf("%s\n", map_data->ea_tex);
+	printf("%s\n", map_data->we_tex);
+	printf("%X\n", map_data->color_c);
+	printf("%X\n", map_data->color_f);
+	char **gg = map_data->map;
+	int	i = 0;
+	while (gg[i++])
+		printf("%s\n", gg[i]);
+	return (0);
+}
+

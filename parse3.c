@@ -6,13 +6,13 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 03:29:36 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 15:14:37 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:37:52 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	get_color(char *buffer, char *delim, int* fill)
+void	get_color(char *buffer, char *delim, int *fill)
 {
 	char	**res;
 	char	*b;
@@ -76,12 +76,12 @@ void	check_spaces(char **map)
 			if (z[i][j] == '0')
 			{
 				check_chars(z[i][j + 1], z[i][j - 1],
-							z[i + 1][j], z[i - 1][j]);
+					z[i + 1][j], z[i - 1][j]);
 			}
 			if (z[i][j] == ' ')
 			{
 				check_chars_g(z[i][j + 1], z[i][j - 1],
-							z[i + 1][j], z[i - 1][j]);
+					z[i + 1][j], z[i - 1][j]);
 			}
 			j++;
 		}
@@ -112,6 +112,5 @@ t_data	*transform(t_map **all_map_adr)
 	tr_map->map[i] = NULL;
 	extract_color(&tr_map, &all_map);
 	check_spaces(tr_map->map);
-	printf("done\n");
 	return (tr_map);
 }

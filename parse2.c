@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:40:13 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 10:51:26 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:36:48 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_line(char *g, int mode)
 {
 	int		i;
 	char	*buffer;
-	
+
 	buffer = ft_strtrim(g, " \t");
 	i = 0;
 	if (mode == 0)
@@ -79,10 +79,13 @@ void	elements(t_map **all_map_adr)
 	int		i;
 	int		players;
 
-	map = *all_map_adr, map_list = map->map, players = 0;
+	map = *all_map_adr;
+	map_list = map->map;
+	players = 0;
 	while (map_list)
 	{
-		content = map_list->content, i = 0;
+		content = map_list->content;
+		i = 0;
 		while (content[i])
 		{
 			if (!ft_strchr(" 10NSWE", content[i]))

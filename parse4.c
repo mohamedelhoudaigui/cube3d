@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 10:36:42 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 15:14:25 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:39:36 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	biggest_line(char **map)
 
 	biggest = 0;
 	i = 0;
-	while(map[i])
+	while (map[i])
 	{
 		if (ft_strlen(map[i]) > biggest)
 			biggest = ft_strlen(map[i]);
@@ -50,30 +50,30 @@ int	biggest_line(char **map)
 	return (biggest);
 }
 
-char *append_spaces(char *line, int size)
+char	*append_spaces(char *line, int size)
 {
-    int		lineLength;
+	int		line_len;
 	char	*res;
 	int		i;
 
-	lineLength = ft_strlen(line);
-    if (size <= lineLength)
-        return (line);
-    res = gb_malloc(sizeof(char) * (size + 1), 0);
+	line_len = ft_strlen(line);
+	if (size <= line_len)
+		return (line);
+	res = gb_malloc(sizeof(char) * (size + 1), 0);
 	i = 0;
-    while (i < lineLength)
+	while (i < line_len)
 	{
-        res[i] = line[i];
+		res[i] = line[i];
 		i++;
-    }
-	i = lineLength;
-    while (i < size)
+	}
+	i = line_len;
+	while (i < size)
 	{
-        res[i] = ' ';
+		res[i] = ' ';
 		i++;
-    }
-    res[size] = '\0';
-    return res;
+	}
+	res[size] = '\0';
+	return (res);
 }
 
 char	**alter_map(char **map)
