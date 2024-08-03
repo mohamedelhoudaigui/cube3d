@@ -1,47 +1,36 @@
-SRCS = ./parse/parse.c ./parse/utils.c ./raycasting/raycaster.c \
-		./raycasting/mlx_functions.c ./raycasting/map_draw.c \
-		./raycasting/key_hooks.c ./raycasting/utils_r.c ./raycasting/color.c \
-		./raycasting/draw_funcs.c ./raycasting/apply_raycasting.c \
-		./raycasting/put_img_to_window.c
+SRCS = parse.c utils.c main.c ./garbage_collector/garb_col.c \
+		./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
+		linked_list.c parse2.c utils2.c parse3.c utils3.c utils4.c parse4.c
+
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 
-OFLAGS =  -Wall -Wextra -Werror -g -lmlx -framework OpenGL -framework AppKit
-CFLAGS = -Wall -Wextra -Werror -c
+CFLAGS = -Wall -Wextra -Werror -g
 
 RM = rm -f
 
 NAME = cub3D
 
-HEADERS = cube.h
+HEADERS = cube.h ./garbage_collector/garbage.h ./get_next_line/get_next_line.h
 
-LIB = make -C ./include
 
-LIB_PATH = ./include
+all : $(NAME)
 
-LIB_ARC = ./include/libft.a
-
-all : lib $(NAME)
-
-lib :
-	$(LIB)
 
 $(NAME) : $(OBJS)
-	$(CC) $(OFLAGS) -o $(NAME) $(OBJS) $(LIB_ARC)
+	$(CC) $(OFLAGS) -o $(NAME) $(OBJS)
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFlAGS) -c $< -o $@
 
 clean:
-	make -C ./include clean
 	$(RM) $(OBJS)
 
 fclean : clean
-	make -C ./include fclean
 	$(RM) $(NAME)
 
 re : fclean all
 
-.PHONY: clean lib
+.PHONY: clean
