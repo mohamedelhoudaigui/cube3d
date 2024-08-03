@@ -6,17 +6,16 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:10 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 17:44:37 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:50:04 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-# include "./get_next_line/get_next_line.h"
-# include "./garbage_collector/garbage.h"
+# include "../get_next_line/get_next_line.h"
+# include "../garbage_collector/garbage.h"
 
-# include <stdio.h>
 # include <stdbool.h>
 # include <limits.h>
 

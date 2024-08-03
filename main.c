@@ -6,11 +6,11 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:12 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 17:46:30 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:50:14 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "./parse/cub.h"
 
 void	f(void)
 {
