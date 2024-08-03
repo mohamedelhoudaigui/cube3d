@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:12 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 15:15:53 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:01:33 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int ac, char **av)
 	map = parse(av[1]);
 	validate(&map);
 	map_data = transform(&map);
-	check_textures(&map_data);
 	//printf("%s\n", map_data->no_tex);
 	//printf("%s\n", map_data->so_tex);
 	//printf("%s\n", map_data->ea_tex);
