@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:08 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 17:36:02 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:13:08 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,23 @@ void	assigner(char *buffer, t_map **all_map_adr)
 	if (!buffer)
 		return ;
 	all_map = *all_map_adr;
-	while (*buffer == ' ' || *buffer == '\t')
+	while (*buffer == ' ' || *buffer == '\t' || *buffer == '\n')
 		buffer++;
-	if (ft_strncmp(buffer, "NO ", 3) == 0)
+	if (ft_strncmp(buffer, "NO ", 3) == 0 && check(all_map->no_tex))
 		all_map->no_tex = trim_behind(buffer);
-	else if (ft_strncmp(buffer, "SO ", 3) == 0)
+	if (ft_strncmp(buffer, "SO ", 3) == 0 && check(all_map->so_tex))
 		all_map->so_tex = trim_behind(buffer);
-	else if (ft_strncmp(buffer, "WE ", 3) == 0)
+	if (ft_strncmp(buffer, "WE ", 3) == 0 && check(all_map->we_tex))
 		all_map->we_tex = trim_behind(buffer);
-	else if (ft_strncmp(buffer, "EA ", 3) == 0)
+	if (ft_strncmp(buffer, "EA ", 3) == 0 && check(all_map->ea_tex))
 		all_map->ea_tex = trim_behind(buffer);
-	else if (ft_strncmp(buffer, "F ", 2) == 0)
+	if (ft_strncmp(buffer, "F ", 2) == 0 && check(all_map->color_f))
 		all_map->color_f = trim_behind(buffer);
-	else if (ft_strncmp(buffer, "C ", 2) == 0)
+	if (ft_strncmp(buffer, "C ", 2) == 0 && check(all_map->color_c))
 		all_map->color_c = trim_behind(buffer);
 }
+
+// last map in good is not working !!
 
 int	move_to_map(char *buffer)
 {
@@ -82,14 +84,21 @@ t_map	*parse(char *map)
 	while (true)
 	{
 		buffer = get_next_line(fd);
+		printf("buffer = %s\n", buffer);
 		if (!buffer)
 			break ;
 		assigner(buffer, &all_map);
 		if (move_to_map(buffer) == 1 && checker(&all_map) == 1)
+		{
+			//printf("%s\n%s\n%s\n%s\n%s\n%s\n", all_map->no_tex, all_map->so_tex, all_map->ea_tex, all_map->we_tex, all_map->color_c, all_map->color_f);
 			write_fd("Error\nmisplaced map\n", 2);
+		}
+		else if (move_to_map(buffer) == 0 && map_list != NULL)
+			write_fd("Error\nempty line in map\n", 2);
 		else if (move_to_map(buffer) == 1 && checker(&all_map) == 0)
 			ft_lstadd_back(&map_list, ft_lstnew(trim_behind(buffer)));
 	}
+	close(fd);
 	all_map->map = map_list;
 	return (all_map);
 }

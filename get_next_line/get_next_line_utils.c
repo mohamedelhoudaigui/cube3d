@@ -6,113 +6,82 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:48:15 by mel-houd          #+#    #+#             */
-/*   Updated: 2023/11/22 18:05:39 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:01:16 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	found_newline(t_list *list)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	i;
+	int		sizetotal;
+	char	*res;
+	int		i;
+	int		j;
 
-	if (!list)
-		return (0);
-	while (list)
-	{
-		i = 0;
-		while (list->str_buf[i] && i < BUFFER_SIZE)
-		{
-			if (list->str_buf[i] == '\n')
-				return (1);
-			i++;
-		}
-		list = list->next;
-	}
-	return (0);
-}
-
-t_list	*find_last_node(t_list *list)
-{
-	if (!list)
+	if (!s1 || !s2)
 		return (NULL);
-	while (list->next)
-		list = list->next;
-	return (list);
+	i = 0;
+	sizetotal = ft_strln(s1) + ft_strln(s2);
+	res = gb_malloc(sizeof(char) * (sizetotal + 1), 0);
+	while (s1[i] != 0)
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] != 0)
+	{
+		res[i] = s2[j];
+		i++;
+		j++;
+	}
+	res[sizetotal] = 0;
+	return (res);
 }
 
-void	copy_str(t_list *list, char *str)
+char	*ft_strch(const char *string, int searchedChar )
 {
-	int	i;
-	int	k;
+	char	*str;
 
-	if (!list)
-		return ;
-	k = 0;
-	while (list)
-	{
-		i = 0;
-		while (list->str_buf[i])
-		{
-			if (list->str_buf[i] == '\n')
-			{
-				str[k++] = '\n';
-				str[k] = '\0';
-				return ;
-			}
-			str[k++] = list->str_buf[i++];
-		}
-		list = list->next;
-	}
-	str[k] = '\0';
-}
-
-int	len_to_newline(t_list *list)
-{
-	int	i;
-	int	len;
-
-	if (NULL == list)
-		return (0);
-	len = 0;
-	while (list)
-	{
-		i = 0;
-		while (list->str_buf[i])
-		{
-			if (list->str_buf[i] == '\n')
-			{
-				++len;
-				return (len);
-			}
-			++i;
-			++len;
-		}
-		list = list->next;
-	}
-	return (len);
-}
-
-void	dealloc(t_list **list, t_list *clean_node, char *buf)
-{
-	t_list	*tmp;
-
-	if (!*list)
-		return ;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->str_buf);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
-	if (clean_node->str_buf[0])
-		*list = clean_node;
+	str = (char *)string;
+	while (*str != searchedChar && *str != 0)
+		str++;
+	if (*str == searchedChar)
+		return (str);
 	else
+		return (NULL);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *)s;
+	i = 0;
+	while (i < n)
 	{
-		free(buf);
-		free(clean_node);
-		*list = NULL;
+		str[i] = '\0';
+		i++;
 	}
+}
+
+void	*ft_calloc(size_t elementCount, size_t elementSize)
+{
+	char	*res;
+
+	res = gb_malloc(elementSize * elementCount, 0);
+	ft_bzero(res, elementSize * elementCount);
+	return (res);
+}
+
+size_t	ft_strln(const char *theString)
+{
+	int	i;
+
+	i = 0;
+	while (theString[i])
+		i++;
+	return (i);
 }

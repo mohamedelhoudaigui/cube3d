@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 22:40:13 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 17:36:48 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/04 12:39:29 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	borders(t_map **all_map_adr)
 	i = 0;
 	while (map_list)
 	{
-		if (i == 0 || i == list_size)
+		if (i == 0 || i == list_size - 1)
 			check_line(map_list->content, 0);
 		else
 			check_line(map_list->content, 1);

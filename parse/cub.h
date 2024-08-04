@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:10 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 17:50:04 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:06:58 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # include <stdbool.h>
 # include <limits.h>
+# include <fcntl.h>
+# include <stdio.h>
 
 typedef struct s_node
 {
@@ -89,6 +91,9 @@ int		biggest_line(char **map);
 char	**alter_map(char **map);
 char	*append_spaces(char *line, int size);
 void	check_textures(t_data **map_data_adr);
+void	check_texture(char *text, char *msg);
 t_data	*parse_entry(int ac, char **av);
+void	check_extention(char *buffer, char *ext);
+int		check(char *val);
 
 #endif

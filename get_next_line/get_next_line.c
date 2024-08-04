@@ -6,115 +6,103 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:44:26 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/01 20:26:17 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:00:58 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	polish_list(t_list **list)
+char	*ft_free(char *buffer, char *buf)
 {
-	t_list	*last_node;
-	t_list	*clean_node;
+	char	*temp;
+
+	temp = ft_strjoin(buffer, buf);
+	free(buffer);
+	return (temp);
+}
+
+char	*ft_next(char *buffer)
+{
 	int		i;
-	int		k;
-	char	*buf;
+	int		j;
+	char	*line;
 
-	buf = (char *)gb_malloc((BUFFER_SIZE + 1) * sizeof(char), 0);
-	clean_node = (t_list *)gb_malloc(sizeof(t_list), 0);
-	if (!buf || !clean_node)
-		return ;
-	last_node = find_last_node(*list);
 	i = 0;
-	k = 0;
-	while (last_node->str_buf[i] && last_node->str_buf[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	while (last_node->str_buf[i] && last_node->str_buf[++i])
-		buf[k++] = last_node->str_buf[i];
-	buf[k] = '\0';
-	clean_node->str_buf = buf;
-	clean_node->next = NULL;
-	dealloc(list, clean_node, buf);
-}
-
-char	*get_line_str(t_list *list)
-{
-	int		str_len;
-	char	*next_str;
-
-	if (!list)
-		return (NULL);
-	str_len = len_to_newline(list);
-	next_str = (char *)gb_malloc(str_len + 1, 0);
-	if (!next_str)
-		return (NULL);
-	copy_str(list, next_str);
-	return (next_str);
-}
-
-void	append(t_list **list, char *buf)
-{
-	t_list	*new_node;
-	t_list	*last_node;
-
-	if (!list)
-		return ;
-	last_node = find_last_node(*list);
-	new_node = (t_list *)gb_malloc(sizeof(t_list), 0);
-	if (!new_node)
-		return ;
-	if (!last_node)
-		*list = new_node;
-	else
-		last_node->next = new_node;
-	new_node->str_buf = buf;
-	new_node->next = NULL;
-}
-
-void	create_list(t_list **list, int fd)
-{
-	int		char_read;	
-	char	*buf;
-
-	while (!found_newline(*list))
+	if (!buffer[i])
 	{
-		buf = (char *)gb_malloc((BUFFER_SIZE + 1) * sizeof(char), 0);
-		if (!buf)
-			return ;
-		char_read = read(fd, buf, BUFFER_SIZE);
-		if (char_read == 0)
-		{
-			free(buf);
-			buf = NULL;
-			return ;
-		}
-		buf[char_read] = '\0';
-		append(list, buf);
+		free(buffer);
+		return (NULL);
 	}
+	line = ft_calloc((ft_strln(buffer) - i + 1), sizeof(char));
+	i++;
+	j = 0;
+	while (buffer[i])
+		line[j++] = buffer[i++];
+	free(buffer);
+	return (line);
+}
+
+char	*ft_line(char *buffer)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	if (!buffer[i])
+		return (NULL);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	line = ft_calloc(i + 2, sizeof(char));
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		line[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] && buffer[i] == '\n')
+		line[i++] = '\n';
+	return (line);
+}
+
+char	*read_file(int fd, char *res)
+{
+	char	*buffer;
+	int		byte_read;
+
+	if (!res)
+		res = ft_calloc(1, 1);
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	byte_read = 1;
+	while (byte_read > 0)
+	{
+		byte_read = read(fd, buffer, BUFFER_SIZE);
+		if (byte_read == -1)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		buffer[byte_read] = 0;
+		res = ft_free(res, buffer);
+		if (ft_strch(buffer, '\n'))
+			break ;
+	}
+	free(buffer);
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_list	*list = NULL;
-	char			*next_line;
-	t_list			*tmp;
+	static char	*buffer;
+	char		*line;
 
-	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		while (list)
-		{
-			tmp = list->next;
-			free(list->str_buf);
-			free(list);
-			list = tmp;
-		}
-		list = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	}
-	create_list(&list, fd);
-	if (!list)
+	buffer = read_file(fd, buffer);
+	if (!buffer)
 		return (NULL);
-	next_line = get_line_str(list);
-	polish_list(&list);
-	return (next_line);
+	line = ft_line(buffer);
+	buffer = ft_next(buffer);
+	return (line);
 }
