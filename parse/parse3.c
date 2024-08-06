@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 03:29:36 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/03 17:37:52 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/06 03:52:05 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	check_spaces(char **map)
 	}
 }
 
-t_data	*transform(t_map **all_map_adr)
+t_data	*transform(t_map **all_map_adr, t_mlx **ini_adr)
 {
 	t_data	*tr_map;
 	t_map	*all_map;
@@ -101,6 +101,7 @@ t_data	*transform(t_map **all_map_adr)
 	map = all_map->map;
 	size = ft_lst_size(map);
 	tr_map = gb_malloc(sizeof(t_data), 0);
+	tr_map->ini = *ini_adr;
 	tr_map->map = gb_malloc(sizeof(char *) * size + 1, 0);
 	assign_textures(&tr_map, all_map_adr);
 	i = 0;

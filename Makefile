@@ -1,7 +1,7 @@
 SRCS = ./parse/parse.c ./parse/utils.c main.c ./garbage_collector/garb_col.c \
 		./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
 		./parse/linked_list.c ./parse/parse2.c ./parse/utils2.c ./parse/parse3.c \
-		./parse/utils4.c ./parse/parse4.c ./parse/utils3.c
+		./parse/utils4.c ./parse/parse4.c ./parse/utils3.c ./parse/parse5.c
 
 
 OBJS = $(SRCS:.c=.o)
@@ -21,10 +21,10 @@ all : $(NAME)
 
 
 $(NAME) : $(OBJS)
-	$(CC) $(OFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(OFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(OBJS) -o $(NAME)
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CFlAGS) -c $< -o $@
+	$(CC) $(CFlAGS) -Imlx -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)
