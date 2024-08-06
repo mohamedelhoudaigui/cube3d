@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:12 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/06 04:05:28 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/06 05:00:54 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_data	*parse_entry(int ac, char **av)
 	map_data = transform(&map, &ini);
 	check_textures(&map_data);
 	open_textures(&map_data);
+	assign_player_pos(&map_data);
 	return (map_data);
 }
 
@@ -78,5 +79,6 @@ int	main(int ac, char **av)
 	printf("%d %d\n", map_data->so_texture->w, map_data->so_texture->h);
 	printf("%d %d\n", map_data->ea_texture->w, map_data->ea_texture->h);
 	printf("%d %d\n", map_data->we_texture->w, map_data->we_texture->h);
+	printf("player x = %d\nplayer y = %d\nplayer_face = %c\n", map_data->player_x, map_data->player_y, map_data->player_face);
 	return (0);
 }
