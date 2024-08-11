@@ -14,26 +14,25 @@ void update_player_position(t_info *info, double move_speed,
   check_collision(info, move, strafe, new);
 }
 
-void handle_player_movement(t_info *info, mlx_key_data_t key)
-{
+void handle_player_movement(t_info *info, int key) {
   double move_speed = 5.0;
   double rotation_speed = 0.1;
   t_player *player = info->player;
 
-  if (key.key == W_KEY)
+  if (key == W_KEY)
     update_player_position(info, move_speed, 0);
-  if (key.key == S_KEY)
+  if (key == S_KEY)
     update_player_position(info, -move_speed, 0);
-  if (key.key == A_KEY)
+  if (key == A_KEY)
     update_player_position(info, 0, -move_speed);
-  if (key.key == D_KEY)
+  if (key == D_KEY)
     update_player_position(info, 0, move_speed);
-  if (key.key == RIGHT_KEY) {
+  if (key == RIGHT_KEY) {
     player->angle += rotation_speed;
     if (player->angle < 0)
       player->angle += 2 * M_PI;
   }
-  if (key.key == LEFT_KEY) {
+  if (key == LEFT_KEY) {
     player->angle -= rotation_speed;
     if (player->angle > 2 * M_PI)
       player->angle -= 2 * M_PI;

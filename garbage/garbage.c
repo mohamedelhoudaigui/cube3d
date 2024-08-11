@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlamkadm <mlamkadm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:27:22 by mlamkadm          #+#    #+#             */
-/*   Updated: 2024/02/09 22:38:55 by mlamkadm         ###   ########.fr       */
+/*   Updated: 2024/08/11 19:07:25 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/garbage.h"
-#include "../lib/libft/libft.h"
 
 void	*chad_alloc(size_t size, int quantity, t_alloc *address)
 {

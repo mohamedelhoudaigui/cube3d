@@ -1,37 +1,41 @@
-NAME	:= cub3D
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
-LIBMLX	:= ./mlx/
+
+CC := cc
+
+NAME := cub3d
+
+CFLAGS := -Wextra -Wall -Werror -g
+
+DRAW := drawing/tool_kit.c raycasting/cast.c physics/movement_and_collision.c
+
 UTILS := utils/init.c
-HEADERS	:= -I ./inc -I $(LIBMLX)/include ./parse/parse/cub.h
 
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -L "/Users/mel-houd/.brew/opt/glfw/lib" -pthread -lm
+HEADERS = ./parse/cube.h ./garbage_collector/garbage.h ./get_next_line/get_next_line.h
 
-SRCS = raycasting/raycasting.c ./parse/parse/parse.c parse/p_entry.c\
+SRCS = raycasting/raycasting.c $(DRAW) $(UTILS) ./parse/parse/parse.c parse/p_entry.c\
 	   ./parse/parse/utils.c main.c parse/garbage_collector/garb_col.c \
 		parse/get_next_line/get_next_line.c parse/get_next_line/get_next_line_utils.c \
 		parse/parse/linked_list.c parse/parse/parse2.c parse/parse/utils2.c parse/parse/parse3.c \
 		parse/parse/utils4.c parse/parse/parse4.c parse/parse/utils3.c parse/parse/parse5.c \
-		raycasting/texture_handle.c ./utils/init.c drawing/tool_kit.c raycasting/cast.c physics/movement_and_collision.c
-OBJS	:= ${SRCS:.c=.o}
+		raycasting/texture_handle.c
 
-all: libmlx $(NAME)
+OBJS := ${SRCS:.c=.o}
 
-libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-%.o: %.c $(HEADERS)
-	@$(CC) $(CFLAGS) -o $@ -c $< && printf "Compiling: $(notdir $<)\n"
+all : $(NAME)
 
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+%.o: %.c
+	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+
+$(NAME): $(OBJS) 
+	$(CC) $(OBJS) -oFast -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean:
-	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
+	rm -rf $(OBJS)
 
 fclean: clean
-	@rm -rf $(NAME)
+	rm -rf $(NAME)
 
-re: clean all
+re: fclean all
 
-.PHONY: all clean fclean re libmlx
+.PHONY: all clean fclean re 
+

@@ -1,23 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/11 23:08:35 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/08/11 23:08:47 by mel-houd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYCAST_H
-#define RAYCAST_H
+# define RAYCAST_H
 
-#include <math.h>
-#include "../mlx/include/MLX42/MLX42.h"
-#include "struct.h"
-#include "utils.h"
-#include <fcntl.h>
-#include <stdio.h>
+# include "struct.h"
+# include "utils.h"
+# include <fcntl.h>
+# include <math.h>
+# include <mlx.h>
+# include <stdio.h>
 
-void		player_move_d(t_player *);
-void		player_move_a(t_player *);
-void		player_move_s(t_player *);
-void		player_move_w(t_player *);
-void		renderer(t_info *info);
-t_map		load_map_data(t_map *map);
-void    	clear_window(mlx_t *mlx);
-void    	raycaster(t_info *);
-void    	test_cast(t_info *info);
-
-
+void	player_move_d(t_player *a);
+void	player_move_a(t_player *a);
+void	player_move_s(t_player *a);
+void	player_move_w(t_player *a);
+void	renderer(t_info *info);
+t_map	load_map_data(t_map *map);
+void	clear_window(t_mlx *mlx);
+void	raycaster(t_info *a);
+void	test_cast(t_info *info);
 
 #endif

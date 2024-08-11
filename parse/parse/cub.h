@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:10 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 05:34:06 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:37:17 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,36 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include "../../mlx/include/MLX42/MLX42.h"
-# include "../../inc/macros.h"
-
+# include <mlx.h>
 
 typedef struct s_node
 {
 	void			*content;
 	struct s_node	*next;
 }				t_node;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*mlx_win;
+	void	*frame;
+}				t_mlx;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
+
+typedef struct s_texture
+{
+	t_img	*tex;
+	int		w;
+	int		h;
+}				t_texture;
 
 typedef struct s_map
 {
@@ -43,22 +64,22 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	mlx_t			*ini;
-	char			**map;
-	char			*no_tex;
-	char			*so_tex;
-	char			*ea_tex;
-	char			*we_tex;
-	mlx_texture_t	*no_texture;
-	mlx_texture_t	*so_texture;	
-	mlx_texture_t	*ea_texture;
-	mlx_texture_t	*we_texture;
-	int				color_c;
-	int				color_f;
-	int				player_x;
-	int				player_y;
-	char			player_face;
-}					t_data;
+	t_mlx		*ini;
+	char		**map;
+	char		*no_tex;
+	char		*so_tex;
+	char		*ea_tex;
+	char		*we_tex;
+	t_texture	*no_texture;
+	t_texture	*so_texture;
+	t_texture	*ea_texture;
+	t_texture	*we_texture;
+	int			color_c;
+	int			color_f;
+	int			player_x;
+	int			player_y;
+	char		player_face;
+}			t_data;
 
 t_node		*ft_lstnew(void *content);
 void		ft_lstadd_back(t_node **lst, t_node *new);
@@ -84,11 +105,12 @@ int			ft_getstart(char *s1, char *set);
 int			ft_getend(char *s1, char *set);
 char		*ft_strtrim(char *s1, char *set);
 int			ft_strlcpy(char *dst, char *src, int dstsize);
-t_data		*transform(t_map **all_map_adr, mlx_t **ini_adr);
+t_data		*transform(t_map **all_map_adr, t_mlx **ini_adr);
 char		*ft_strdup(char *s1);
 int			count_words(char *s, char *delimiters);
 int			word_size(char *s, char *delimiters, int i);
-int			fill_string(char *s, char *delimiters, char **res, int number_words);
+int			fill_string(char *s, char *delimiters, char **res,
+				int number_words);
 char		**ft_split(char *s, char *delimiters);
 char		*ft_substr(char *s, int start, int len);
 int			ft_atoi(char *str);
@@ -106,7 +128,7 @@ void		check_texture(char *text, char *msg);
 t_data		*parse_entry(int ac, char **av);
 void		check_extention(char *buffer, char *ext);
 int			check(char *val);
-mlx_texture_t	*open_tex(char *path);
+t_texture	*open_tex(char *path, void *mlx_ptr);
 void		open_textures(t_data **all_data_adr);
 void		assign_player_pos(t_data **all_data_ptr);
 

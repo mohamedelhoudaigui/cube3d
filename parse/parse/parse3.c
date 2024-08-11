@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 03:29:36 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 05:33:35 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/11 22:02:08 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	check_spaces(char **map)
 	}
 }
 
-t_data	*transform(t_map **all_map_adr, mlx_t **ini_adr)
+t_data	*transform(t_map **all_map_adr, t_mlx **ini_adr)
 {
 	t_data	*tr_map;
 	t_map	*all_map;
@@ -107,8 +107,9 @@ t_data	*transform(t_map **all_map_adr, mlx_t **ini_adr)
 	i = 0;
 	while (map)
 	{
-		tr_map->map[i++] = map->content;
+		tr_map->map[i] = map->content;
 		map = map->next;
+		i++;
 	}
 	tr_map->map[i] = NULL;
 	extract_color(&tr_map, &all_map);
