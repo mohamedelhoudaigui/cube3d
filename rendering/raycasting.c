@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   garbage.h                                          :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 21:17:29 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/12 20:38:37 by mel-houd         ###   ########.fr       */
+/*   Created: 2024/08/11 23:21:42 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/08/12 20:33:08 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GARBAGE_H
+#include "../inc/draw.h"
+#include "../inc/macros.h"
+#include "../inc/raycast.h"
+#include "../inc/struct.h"
+#include "../inc/utils.h"
 
-# define GARBAGE_H
+void	raycaster(t_info *info)
+{
+	cast(info);
+}
 
-# include <stdlib.h>
-# include <unistd.h>
+void	renderer(t_info *info)
+{
+	t_mlx	*mlx;
 
-# define MAX_SIZE 4096
-
-void	*gb_malloc(size_t size, int type);
-
-#endif
+	mlx = info->mlx;
+	raycaster(info);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, info->img.img, 0, 0);
+}

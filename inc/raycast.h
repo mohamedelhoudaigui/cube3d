@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:08:35 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 23:08:47 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:38:57 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
-# include <stdio.h>
 
 void	player_move_d(t_player *a);
 void	player_move_a(t_player *a);
@@ -28,6 +27,6 @@ void	renderer(t_info *info);
 t_map	load_map_data(t_map *map);
 void	clear_window(t_mlx *mlx);
 void	raycaster(t_info *a);
-void	test_cast(t_info *info);
+void	cast(t_info *info);
 
 #endif

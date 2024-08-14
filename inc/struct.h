@@ -6,14 +6,14 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:09:33 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 23:11:53 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:39:03 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include "../parse/parse/cub.h"
+# include "cub.h"
 # include <math.h>
 # include <mlx.h>
 # include <stdbool.h>
@@ -27,6 +27,14 @@ typedef enum s_comp
 	east = 2,
 	south = 3,
 }				t_comp;
+
+typedef struct s_wall_info
+{
+	double	corrected_dist;
+	double	wall_height;
+	int		draw_start;
+	int		draw_end;
+}	t_wall_info;
 
 typedef struct s_point
 {
@@ -48,6 +56,16 @@ typedef struct s_game_vars
 	double		player_fov;
 
 }				t_game;
+
+typedef struct s_ray_info
+{
+	t_point	dir;
+	t_point	ray_step;
+	t_point	ray_len;
+	t_point	step;
+	int		map_x;
+	int		map_y;
+}			t_ray_info;
 
 typedef struct s_player
 {
@@ -78,6 +96,7 @@ typedef struct s_info
 	double		dis;
 	int			draw_start;
 	int			draw_end;
+	double		ray_angle;
 }				t_info;
 
 #endif

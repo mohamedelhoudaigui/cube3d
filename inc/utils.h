@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:12:31 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 23:12:33 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:39:13 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "struct.h"
 # include <mlx.h>
+# include <math.h>
 
 t_player	*player_init(void);
 void		info_init(t_info *info);

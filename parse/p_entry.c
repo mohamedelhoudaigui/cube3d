@@ -6,11 +6,11 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:01:12 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 22:57:11 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:40:35 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./parse/cub.h"
+#include "../inc/cub.h"
 #include "../inc/macros.h"
 
 void	check_extention(char *buffer, char *ext)

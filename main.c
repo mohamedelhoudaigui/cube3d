@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/12 08:06:08 by mel-houd          #+#    #+#             */
+/*   Updated: 2024/08/12 18:40:13 by mel-houd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "inc/defines.h"
 #include "inc/macros.h"
@@ -5,55 +16,7 @@
 #include "inc/struct.h"
 #include "inc/utils.h"
 #include <mlx.h>
-#include <stdio.h>
 #include <stdlib.h>
-
-void	free_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		free(arr[i]);
-	}
-}
-
-void	free_all(t_info *info)
-{
-	void	*mlx;
-	void	*mlx_win;
-
-	mlx = info->mlx->mlx;
-	mlx_win = info->mlx->mlx_win;
-	mlx_destroy_window(mlx, mlx_win);
-	// free_arr(info->map->map);
-	// free(info->map);
-	free(info->player);
-	free(info);
-	exit(EXIT_FAILURE);
-}
-
-void	key_hook(int key, t_info *info)
-{
-	if (key == ESC_KEY)
-		free_all(info);
-	else
-	{
-		handle_player_movement(info, key);
-	}
-}
-
-void	new_window(t_mlx *mlx)
-{
-	mlx->mlx_win = mlx_new_window(mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT,
-			"Cub3d");
-}
-
-void	new_image(t_info *info)
-{
-	info->img.addr = mlx_new_image(info->mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-}
 
 int	get_offset(t_img *image, t_point pixel)
 {
@@ -75,22 +38,17 @@ bool	game_init(t_info *info)
 	t_img	image;
 
 	mlx = info->mlx;
-	new_window(info->mlx);
 	image.img = mlx_new_image(mlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (image.img == NULL)
 		return (false);
 	image.addr = mlx_get_data_addr(image.img, &image.bits_per_pixel,
 			&image.line_length, &image.endian);
 	info->img = image;
-	mlx_hook(mlx->mlx_win, 2, 1L << 0, (void *)key_hook, info);
+	mlx_hook(mlx->mlx_win, 17, 0, (void *)free_all, info);
+	mlx_hook(mlx->mlx_win, 2, 1L << 1, (void *)key_hook, info);
 	mlx_loop_hook(mlx->mlx, (void *)renderer, info);
 	mlx_loop(mlx->mlx);
 	return (true);
-}
-
-void	init_mlx(t_mlx *mlx)
-{
-	mlx->mlx = mlx_init();
 }
 
 t_info	*vars_init(int ac, char **av)
@@ -99,7 +57,7 @@ t_info	*vars_init(int ac, char **av)
 	t_info	*info;
 
 	data = parse_entry(ac, av);
-	info = malloc(sizeof(t_info));
+	info = gb_malloc(sizeof(t_info), 0);
 	info->data = data;
 	info->mlx = data->ini;
 	info->map = data->map;

@@ -6,7 +6,7 @@
 /*   By: mel-houd <mel-houd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 23:08:06 by mel-houd          #+#    #+#             */
-/*   Updated: 2024/08/11 23:08:09 by mel-houd         ###   ########.fr       */
+/*   Updated: 2024/08/12 20:38:51 by mel-houd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef enum s_keys
 # define MOVE_SPEED 2
 # define HIT_BOX 10
 # define SCALE_FACTOR 0.7
-# define SCREEN_WIDTH 1980
-# define SCREEN_HEIGHT 1280
+# define SCREEN_WIDTH 1200
+# define SCREEN_HEIGHT 700
 # define TITLE "cub3D"
 # define DEFAULT_ELEMENT_WIDTH 300
 # define DEFAULT_ELEMENT_HEIGHT 100
